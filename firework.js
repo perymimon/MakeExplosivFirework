@@ -27,7 +27,7 @@ var Fireworks = (function() {
         fireworkContext = fireworkCanvas.getContext('2d');
 
         // set up the colours for the fireworks
-        createFireworkPalette(12);
+        createFireworkPalette(11);
 
         // set the dimensions on the canvas
         setMainCanvasDimensions();
@@ -168,7 +168,7 @@ var Fireworks = (function() {
                     y: vel.y || 0
                 },
 
-                color || Math.floor(Math.random() * 100) * 12,
+                color || Math.floor(Math.random() * 100) * 11,
 
                 usePhysics)
         );
@@ -203,8 +203,8 @@ var Particle = function(pos, target, vel, marker, usePhysics) {
     this.alpha    = 1;
     this.easing   = Math.random() * 0.02;
     this.fade     = Math.random() * 0.1;
-    this.gridX    = marker % 120;
-    this.gridY    = Math.floor(marker / 120) * 12;
+    this.gridX    = marker % 110;
+    this.gridY    = Math.floor(marker / 120) * 11;
     this.color    = marker;
 
     this.pos = {
@@ -290,8 +290,8 @@ Particle.prototype = {
 
         // draw in the images
         context.drawImage(fireworkCanvas,
-            this.gridX, this.gridY, 12, 12,
-            x - 6, y - 6, 12, 12);
+            this.gridX, this.gridY, 11, 11,
+            x - 6, y - 6, 11, 11);
         context.drawImage(Library.smallGlow, x - 3, y - 3);
 
         context.restore();
