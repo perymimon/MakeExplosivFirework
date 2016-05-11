@@ -1,1 +1,1 @@
-(/images/caver.png)
+!("/images/caver.png")
