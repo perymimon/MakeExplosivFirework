@@ -17,7 +17,17 @@ function drawFireworks(){
         if(particle.update()){
             particles.splice( i ,1);
             if( !particle.usePhysics ){
-                FireworkExplosions.circle(particle);
+                var r = Math.random();
+                if( r> 0.9 ){
+                    FireworkExplosions.star(particle);
+                }else if(r>0.8){
+                    FireworkExplosions.goblet(particle);
+                }else if(r > 0.5) {
+                    // FireworkExplosions.flower(particle);
+                }else {
+                    FireworkExplosions.circle(particle);
+                }
+
             }
         }else{
             particle.render(mainCtx);
@@ -26,7 +36,7 @@ function drawFireworks(){
 }
 
 function clearContext(){
-    mainCtx.fillStyle = "rgba(0,0,0,0.05)";
+    mainCtx.fillStyle = "rgba(0,0,0,0.06)";
     mainCtx.fillRect(0,0,viewportWidth, viewportHeight);
 }
 
@@ -38,6 +48,7 @@ function ParticlePool( amount ) {
     while( amount-- ){
         pool.push(new Particle())
     }
+
     return {
         getOne : function (particle) {
            let p = pool.pop();
@@ -64,6 +75,11 @@ window.addEventListener('load',function initialize() {
         // (i) = ++i % particles.length;
         particles.push( particlePool.getOne() );
     });
+
+    var i = 10;
+    while(i--){
+        particles.push( particlePool.getOne() );
+    }
 
     function onWindowResize() {
         viewportWidth = window.innerWidth;

@@ -38,10 +38,10 @@ function createFireworkPlate(gridSize) {
 
 function Particle () {
 
-    this.GRAVITY  = 0.06;
+    this.GRAVITY  = 0.03;
     this.alpha    = 1;
     this.easing   = Math.random() * 0.02;
-    this.fade     = Math.random() * 0.1;
+    this.fade     = 0.00002 + Math.random() * 0.08;
 
     this.init();
 
@@ -64,22 +64,14 @@ Particle.prototype.init = function (particle) {
         } ;
 
         /*target*/
-        this.target = {
-            y : 150 + Math.random() * 100
-        };
+        this.target = { y : 150 + Math.random() * 100 };
 
         /*velocity*/
-        this.vel = {
-            x: Math.random() * 3 - 1.5,
-            y: 10
-        };
+        this.vel = { x: Math.random() * 3 - 1.5, y: 10 };
 
         this.color = ~~(Math.random() * 100);
 
-        this.lastPos = {
-            x : this.pos.x,
-            y : this.pos.y
-        };
+        this.lastPos = { x : this.pos.x, y : this.pos.y };
 
         this.usePhysics = false ;
         this.die = false;
@@ -87,7 +79,7 @@ Particle.prototype.init = function (particle) {
 };
 
 Particle.prototype.update  = function () {
-        if (this.die) return false;
+        if (this.die) return true;
 
         this.lastPos = {
             x: this.pos.x,
@@ -98,6 +90,8 @@ Particle.prototype.update  = function () {
             this.vel.y +=this.GRAVITY;
             this.pos.y += this.vel.y;
             this.alpha -=this.fade;
+            if( viewportHeight  < this.pos.y )
+                return this.die = true;
         }else{
             var distance = (this.target.y - this.pos.y);
 
@@ -105,7 +99,7 @@ Particle.prototype.update  = function () {
             this.pos.y += distance * (0.03 + this.easing);
 
             // cap to 1
-            this.alpha = Math.min( distance * distance * 0.00005, 1);
+            this.alpha = Math.min( distance * distance * 0.00003, 1);
         }
 
         this.pos.x += this.vel.x;
